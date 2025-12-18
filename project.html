@@ -6,10 +6,13 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>SmartKrishi Hub — Home</title>
     <link rel="stylesheet" href="project.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amarna:ital,wght@0,260;1,260&display=swap" rel="stylesheet">
 </head>
 
 <body>
-    <header class="topbar" role="banner">
+    <header class="navbar">
 
         <div class="left">
 
@@ -29,9 +32,8 @@
         </nav>
 
         <div class="actions">
-            <button class="btn outline" id="langBtn" aria-haspopup="true" aria-label="Change language">Language</button>
-            <button class="btn outline" id="dashboardBtn">Dashboard</button>
-            <button class="btn filled" id="logoutTop">Logout</button>
+
+            <button class="btn filled" id="logoutTop" style="color: white;"><a href="login.html">LogOut</a></button>
         </div>
 
     </header>
@@ -98,9 +100,9 @@
                 </section>
 
                 <aside class="hero-right" aria-labelledby="snapshotTitle">
-                    <h2 id="snapshotTitle">Farmer Snapshot</h2>
+                    <h2 id="snapshotTitle" class="farmer">Farmer Snapshot</h2>
                     <div class="card small">
-                        <p><strong>Village:</strong> Demo Gaon</p>
+                        <p><strong>Village:</strong> Gaon</p>
                         <p><strong>Crop:</strong> Tomato</p>
                         <p><strong>Area:</strong> 2 acres</p>
                     </div>
@@ -127,6 +129,19 @@
             </main>
         </div>
     </section>
+
+    <div class="nextstep">
+        <h3>Future Scope</h3>
+        <ul>
+            <li>AI-based crop disease detection</li>
+            <li>Weather-based farming alerts</li>
+            <li>Direct government scheme notifications</li>
+            <li>Farmer-to-farmer community support</li>
+            <li>Online training and certification programs</li>
+        </ul>
+
+
+    </div>
 
     <footer>
         SmartKrishi Hub • Connecting Farmers to innovation.

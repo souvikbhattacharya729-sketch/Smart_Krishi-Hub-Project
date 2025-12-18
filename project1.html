@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>SmartKrishi Hub — Learning</title>
     <link rel="stylesheet" href="project1.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amarna:ital,wght@0,260;1,260&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -26,27 +29,20 @@
         </nav>
 
         <div class="actions">
-            <button class="btn outline" id="langBtn" aria-haspopup="true" aria-label="Change language">Language</button>
-            <button class="btn outline" id="dashboardBtn">Dashboard</button>
-            <button class="btn filled" id="logoutTop">Logout</button>
+
+            <button class="btn filled" id="logoutTop"><a href="login.html">LogOut</a></button>
         </div>
     </header>
 
     <main class="container" role="main">
         <h1>Learning Hub</h1>
-        <p class="subtitle">Short, practical videos and notes for farmers. Upload a local video for demo preview or open
+        <p class="subtitle">Short, practical videos and notes for farmers. Upload a local video for preview or open
             YouTube links.</p>
 
-        <!-- <section class="upload-box">
-            <h2>Upload video (demo)</h2>
-            <form id="videoForm">
-                <input id="videoInput" type="file" accept="video/*" />
-                <div id="previewArea"></div>
-            </form>
-        </section> -->
+
 
         <section class="grid" aria-live="polite" id="videosGrid">
-            <!-- demo video cards will be rendered here -->
+
         </section>
 
         <section class="box">
@@ -92,16 +88,8 @@
         }
         renderVideos();
 
-        // Preview uploaded video file (demo)
-        document.getElementById('videoInput').addEventListener('change', function (e) {
-            const file = e.target.files[0]; const preview = document.getElementById('previewArea'); preview.innerHTML = '';
-            if (!file) return;
-            const url = URL.createObjectURL(file);
-            const v = document.createElement('video'); v.src = url; v.controls = true; v.width = 320; preview.appendChild(v);
-        });
 
-        document.getElementById('backHome').addEventListener('click', () => location.href = 'project.html');
-        document.getElementById('upgradeLearn').addEventListener('click', () => alert('Plus: offline downloads. Pro: expert sessions (demo).'));
+
     </script>
 </body>
 
