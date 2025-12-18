@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>SmartKrishi Hub — Marketplace</title>
+    <link rel="stylesheet" href="project4.css">
+</head>
+
+<body>
+    <header class="topbar" role="banner">
+        <div class="left">
+            <div class="brand"><img src="./logo-removebg-preview.png" alt="" height="200px" width="200px"></div>
+        </div>
+
+        <nav class="nav" role="navigation" aria-label="Main">
+            <a href="project.html">Home</a>
+            <a href="project1.html">Learning</a>
+            <a href="project2.html">Low-Cost Tools</a>
+            <a href="project3.html">AI Chat</a>
+            <a href="project4.html" class="active">Marketplace</a>
+            <a href="project5.html">Schemes</a>
+            <a href="project6.html">Language</a>
+        </nav>
+
+        <div class="actions">
+            <button class="btn outline" id="langBtn" aria-haspopup="true" aria-label="Change language">Language</button>
+            <button class="btn outline" id="dashboardBtn">Dashboard</button>
+            <button class="btn filled" id="logoutTop">Logout</button>
+        </div>
+    </header>
+
+    <main class="container">
+        <h1>Sell Your Produce — Marketplace</h1>
+        <p class="subtitle">Enter crop & location to see nearby wholesale market prices and the best mandi (demo data).
+        </p>
+
+        <section class="box form-box">
+            <form id="sellForm">
+                <div class="row">
+                    <label>Crop <input id="crop" required placeholder="e.g., Tomato"></label>
+                    <label>Quantity (kg) <input id="quantity" type="number" min="1" placeholder="e.g., 800"></label>
+                    <label>PIN Code <input id="pincode" maxlength="6" placeholder="e.g., 530001" required></label>
+                </div>
+                <div class="btn-row"><button class="btn primary" type="submit">Check Markets</button></div>
+            </form>
+        </section>
+
+        <section id="results" class="box">
+            <h2>Nearby Wholesale Markets (Demo)</h2>
+            <div id="marketResults"></div>
+        </section>
+
+        <section class="box">
+            <h2>Farmer listings</h2>
+            <table class="listing">
+                <thead>
+                    <tr>
+                        <th>Farmer</th>
+                        <th>Product</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Ramesh</td>
+                        <td>Tomato</td>
+                        <td>800 kg @ ₹22/kg – local delivery</td>
+                    </tr>
+                    <tr>
+                        <td>Meena</td>
+                        <td>Onion</td>
+                        <td>1200 kg @ ₹18/kg – mandi pickup</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <footer>
+        SmartKrishi Hub • Connecting Farmers to innovation.
+        <p>SmartKrishi Hub is an online farming platform that educates, supports, and empowers farmers through modern
+            technology, low-cost tools, smart farming guidance, and a direct marketplace — helping them earn better and
+            farm smarter.
+        </p>
+        <p>Proudly supporting the United Nations Sustainable Development Goals — including Food Security, Quality
+            Education, Economic Growth, Innovation, Sustainability, and Climate Action.</p>
+        <p><strong> Contact Details :</strong></p>
+        <p> Email : support@smartkrishihub.com</p>
+        <p>Customer Support: +91 9112334890
+        </p>
+
+        <p>© 2025 SmartKrishi Hub. All rights reserved.</p>
+    </footer>
+    <script>
+        if (sessionStorage.getItem('sk_logged_in') !== 'true') location.href = 'login.html';
+
+        const baseMarkets = [
+            { id: 'M1', name: 'Central Krishi Mandi', distance: 8, contact: 'mandi1@demo.com', phone: '+91-987650001' },
+            { id: 'M2', name: 'Green Valley', distance: 14, contact: 'mandi2@demo.com', phone: '+91-987650002' },
+            { id: 'M3', name: 'Sabzi Bazaar', distance: 21, contact: 'mandi3@demo.com', phone: '+91-987650003' }
+        ];
+
+        function priceAdjustment(marketId, crop) {
+            const map = { M1: { tomato: 2, onion: 1, paddy: 1 }, M2: { tomato: 0, onion: 2, paddy: 0 }, M3: { tomato: -1, onion: 0, paddy: 2 } };
+            return (map[marketId] && map[marketId][crop.toLowerCase()]) || 0;
+        }
+
+        document.getElementById('sellForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const crop = document.getElementById('crop').value.trim(); const qty = parseFloat(document.getElementById('quantity').value) || null;
+            const pin = document.getElementById('pincode').value.trim();
+            if (!crop || !pin) return alert('Enter crop and PIN');
+
+            const basePriceMap = { tomato: 22, onion: 18, paddy: 21, default: 16 };
+            const base = basePriceMap[crop.toLowerCase()] || basePriceMap.default;
+
+            const markets = baseMarkets.map(m => {
+                const adj = priceAdjustment(m.id, crop);
+                const pricePerKg = base + adj;
+                return { ...m, pricePerKg, total: qty ? pricePerKg * qty : null };
+            });
+
+            // find best
+            let best = markets[0]; markets.forEach(m => { if (m.pricePerKg > best.pricePerKg) best = m; });
+
+            // render
+            const out = document.getElementById('marketResults'); out.innerHTML = '';
+            markets.forEach(m => {
+                const div = document.createElement('div'); div.className = 'market-card' + (m.id === best.id ? ' best' : '');
+                div.innerHTML = `<h3>${m.name} ${m.id === best.id ? '<span class="tag">Best price</span>' : ''}</h3>
+          <p>${m.distance} km away • Price: ₹${m.pricePerKg}/kg ${m.total ? ' • Total: ₹' + Math.round(m.total) : ''}</p>
+          <p>Contact: <a href="mailto:${m.contact}">${m.contact}</a> • <a href="tel:${m.phone}">${m.phone}</a></p>
+          <p><button class="btn outline" onclick="contactHead('${m.contact}','${m.phone}')">Contact head</button></p>`;
+                out.appendChild(div);
+            });
+        });
+
+        function contactHead(email, phone) {
+            // opens default mail client (demo)
+            window.location.href = 'mailto:' + email + '?subject=Enquiry about mandi';
+        }
+    </script>
+</body>
+
+</html>

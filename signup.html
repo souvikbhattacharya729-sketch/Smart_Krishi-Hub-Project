@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>SmartKrishi Hub – Sign Up</title>
+
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --green: #23a455;
+            --green-dark: #15733a;
+            --bg: #f4f7f5;
+            --text-main: #1f2933;
+            --text-muted: #6b7280;
+            --radius-lg: 18px;
+            --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Poppins", system-ui, -apple-system, sans-serif;
+            background: radial-gradient(circle at top left, #e7f7ed, #f4f7f5);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-main);
+        }
+
+        .signup-wrapper {
+            width: 100%;
+            max-width: 420px;
+            background: #ffffff;
+            border-radius: 26px;
+            padding: 30px 30px 26px;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .brand-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+
+        .logo-circle {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: var(--green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #f5f2f2;
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .brand-title {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .subtext {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 18px;
+        }
+
+        form {
+            margin-top: 6px;
+        }
+
+        .field-group {
+            margin-bottom: 14px;
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            border-radius: 12px;
+            border: 1px solid #d1d5db;
+            padding: 9px 11px;
+            font-size: 13px;
+            outline: none;
+            transition: border-color 0.18s ease, box-shadow 0.18s ease;
+            font-family: inherit;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: var(--green);
+            box-shadow: 0 0 0 3px rgba(35, 164, 85, 0.15);
+        }
+
+        .field-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .field-row .field-group {
+            flex: 1;
+        }
+
+        .helper {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .btn-primary {
+            width: 100%;
+            border: none;
+            border-radius: 999px;
+            padding: 10px 16px;
+            background: var(--green);
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 6px;
+            box-shadow: 0 10px 20px rgba(35, 164, 85, 0.35);
+            transition: background 0.2s ease, transform 0.15s ease;
+            box-shadow: 0.2s ease;
+        }
+
+        .btn-primary:hover {
+            background: var(--green-dark);
+            transform: translateY(-1px);
+            box-shadow: 0 14px 26px rgba(35, 164, 85, 0.38);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+            box-shadow: 0 8px 18px rgba(35, 164, 85, 0.3);
+        }
+
+        .footer-text {
+            text-align: center;
+            margin-top: 12px;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .footer-text a {
+            color: var(--green-dark);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .footer-text a:hover {
+            text-decoration: underline;
+        }
+
+        a {
+            color: white;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="signup-wrapper">
+        <div class="brand-row">
+            <div class="logo-circle">SK</div>
+            <span class="brand-title">SmartKrishi Hub</span>
+        </div>
+        <p class="subtext">
+            Create your account to access learning, tools, schemes and marketplace in your language.
+        </p>
+
+
+        <form action="#" method="post">
+            <div class="field-row">
+                <div class="field-group">
+                    <label for="firstName">First name</label>
+                    <input type="text" id="firstName" name="firstName" required />
+                </div>
+                <div class="field-group">
+                    <label for="lastName">Last name</label>
+                    <input type="text" id="lastName" name="lastName" />
+                </div>
+            </div>
+
+            <div class="field-group">
+                <label for="phone">Mobile number</label>
+                <input type="tel" id="phone" name="phone" placeholder="+91 98765 43210" required />
+                <p class="helper">Used for OTP and WhatsApp updates (optional).</p>
+            </div>
+
+            <div class="field-group">
+                <label for="email">Email (optional)</label>
+                <input type="email" id="email" name="email" placeholder="you@example.com" />
+            </div>
+
+            <div class="field-row">
+                <div class="field-group">
+                    <label for="village">Village</label>
+                    <input type="text" id="village" name="village" required />
+                </div>
+                <div class="field-group">
+                    <label for="crop">Main crop</label>
+                    <input type="text" id="crop" name="crop" placeholder="Tomato, Wheat..." />
+                </div>
+            </div>
+
+            <div class="field-row">
+                <div class="field-group">
+                    <label for="area">Farm area (acres)</label>
+                    <input type="number" id="area" name="area" min="0" step="0.1" />
+                </div>
+                <div class="field-group">
+                    <label for="language">Preferred language</label>
+                    <select id="language" name="language">
+                        <option value="en">English</option>
+                        <option value="hi">Hindi</option>
+                        <option value="bn">Bengali</option>
+                        <option value="te">Telugu</option>
+                        <option value="ta">Tamil</option>
+
+                    </select>
+                </div>
+            </div>
+
+            <div class="field-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" minlength="6" required />
+            </div>
+
+            <div class="field-group">
+                <label for="confirmPassword">Confirm password</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" minlength="6" required />
+            </div>
+
+            <button type="submit" class="btn-primary"> <a href="project.html"> Create an account</button>
+        </form>
+
+        <p class="footer-text">
+            Already have an account?
+            <a href="login.html">Log in</a>
+        </p>
+    </div>
+</body>
+
+</html>

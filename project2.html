@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>SmartKrishi Hub — Low-cost Tools</title>
+    <link rel="stylesheet" href="project2.css">
+</head>
+
+<body>
+    <header class="topbar" role="banner">
+        <div class="left">
+            <div class="brand"><img src="./logo-removebg-preview.png" alt="" height="200px" width="200px"></div>
+        </div>
+
+        <nav class="nav" role="navigation" aria-label="Main">
+            <a href="project.html">Home</a>
+            <a href="project1.html">Learning</a>
+            <a href="project2.html" class="active">Low-Cost Tools</a>
+            <a href="project3.html">AI Chat</a>
+            <a href="project4.html">Marketplace</a>
+            <a href="project5.html">Schemes</a>
+            <a href="project6.html">Language</a>
+        </nav>
+
+        <div class="actions">
+            <button class="btn outline" id="langBtn" aria-haspopup="true" aria-label="Change language">Language</button>
+            <button class="btn outline" id="dashboardBtn">Dashboard</button>
+            <button class="btn filled" id="logoutTop">Logout</button>
+        </div>
+    </header>
+
+    <main class="container">
+        <h1>Low-cost Tools & Medicines</h1>
+        <p class="subtitle">Compare tools across multiple marketplaces and buy from the best link (demo links).</p>
+
+        <section id="productsGrid" class="grid"></section>
+
+        <!-- Modal for compare -->
+        <div id="compareModal" class="modal" aria-hidden="true">
+            <div class="modal-dialog" role="dialog" aria-modal="true" aria-label="Price comparison">
+                <button class="close" id="closeCompare">✕</button>
+                <h3 id="cmpTitle">Comparison</h3>
+                <div id="cmpList"></div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        SmartKrishi Hub • Connecting Farmers to innovation.
+        <p>SmartKrishi Hub is an online farming platform that educates, supports, and empowers farmers through modern
+            technology, low-cost tools, smart farming guidance, and a direct marketplace — helping them earn better and
+            farm smarter.
+        </p>
+        <p>Proudly supporting the United Nations Sustainable Development Goals — including Food Security, Quality
+            Education, Economic Growth, Innovation, Sustainability, and Climate Action.</p>
+        <p><strong> Contact Details :</strong></p>
+        <p> Email : support@smartkrishihub.com</p>
+        <p>Customer Support: +91 9112334890
+        </p>
+
+        <p>© 2025 SmartKrishi Hub. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // auth guard
+        if (sessionStorage.getItem('sk_logged_in') !== 'true') location.href = 'login.html';
+
+        // Demo product data (replace with API or JSON fetch in production)
+        const demoProducts = [
+            { id: 'P1', name: 'Drip Kit 10 plants', desc: 'Easy drip kit for small plots', img: '../816bKvxbNAL.jpg' },
+            { id: 'P2', name: 'Hand Sprayer 5L', desc: 'Manual sprayer for pesticides & foliar', img: '../manual.jpg' },
+            { id: 'P3', name: 'Soil Test Kit', desc: 'Simple home soil kit', img: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="320" height="160"><rect fill="%23eef8ff" width="100%" height="100%"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="%23004a7f">Soil Kit</text></svg>' },
+            { id: 'P3', name: 'Soil Test Kit', desc: 'Simple home soil kit', img: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="320" height="160"><rect fill="%23eef8ff" width="100%" height="100%"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="%23004a7f">Soil Kit</text></svg>' },
+            { id: 'P3', name: 'Soil Test Kit', desc: 'Simple home soil kit', img: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="320" height="160"><rect fill="%23eef8ff" width="100%" height="100%"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="%23004a7f">Soil Kit</text></svg>' },
+            { id: 'P3', name: 'Soil Test Kit', desc: 'Simple home soil kit', img: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="320" height="160"><rect fill="%23eef8ff" width="100%" height="100%"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="%23004a7f">Soil Kit</text></svg>' },
+            { id: 'P3', name: 'Soil Test Kit', desc: 'Simple home soil kit', img: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="320" height="160"><rect fill="%23eef8ff" width="100%" height="100%"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="%23004a7f">Soil Kit</text></svg>' },
+            { id: 'P3', name: 'Soil Test Kit', desc: 'Simple home soil kit', img: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="320" height="160"><rect fill="%23eef8ff" width="100%" height="100%"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="%23004a7f">Soil Kit</text></svg>' },
+        ];
+
+        // Demo marketplaces (simulate price responses)
+        const marketplaces = [
+            { id: 'MZ', name: 'Amazon', url: 'https://amazon.in' },
+            { id: 'FK', name: 'Flipkart', url: 'https://flipkart.com' },
+            { id: 'BB', name: 'BigBasket', url: 'https://bigbasket.com' },
+            { id: 'LS', name: 'LocalShopX', url: 'https://localshop.example' },
+            { id: 'AG', name: 'AgriStore', url: 'https://agristore.example' }
+        ];
+
+        function renderProducts() {
+            const grid = document.getElementById('productsGrid'); grid.innerHTML = '';
+            demoProducts.forEach(p => {
+                const card = document.createElement('article'); card.className = 'card';
+                card.innerHTML = `<img class="thumb" src="${p.img}" alt="${p.name}"><h3>${p.name}</h3><p>${p.desc}</p>
+          <div class="btn-row"><button class="btn outline" data-id="${p.id}" onclick="compare('${p.id}')">Compare prices</button>
+          <button class="btn primary" onclick="addToCart('${p.id}')">Add to cart</button></div>`;
+                grid.appendChild(card);
+            });
+        }
+        renderProducts();
+
+        // Simulate fetching price data (demo). Replace this function with real API call.
+        function fetchPriceData(productId) {
+            // Simulate different prices
+            const base = Math.floor(Math.random() * 500) + 200;
+            return marketplaces.map((m, i) => ({
+                market: m.name,
+                price: base + (i * 20) + (productId.charCodeAt(1) % 30),
+                link: m.url + '/search?q=' + encodeURIComponent(productId)
+            }));
+        }
+
+        function compare(productId) {
+            const modal = document.getElementById('compareModal');
+            modal.setAttribute('aria-hidden', 'false');
+            const list = document.getElementById('cmpList'); list.innerHTML = 'Loading...';
+            document.getElementById('cmpTitle').textContent = 'Price comparison';
+            // fetch demo data
+            setTimeout(() => {
+                const data = fetchPriceData(productId);
+                list.innerHTML = '<table class="cmp-table"><thead><tr><th>Market</th><th>Price (₹)</th><th>Buy</th></tr></thead><tbody>' +
+                    data.map(d => `<tr><td>${d.market}</td><td>₹${d.price}</td><td><a target="_blank" rel="noopener" href="${d.link}">Go to buy</a></td></tr>`).join('') +
+                    '</tbody></table>';
+            }, 400);
+        }
+        document.getElementById('closeCompare').addEventListener('click', () => document.getElementById('compareModal').setAttribute('aria-hidden', 'true'));
+
+        // Add to cart (localStorage demo)
+        function addToCart(pid) {
+            const cart = JSON.parse(localStorage.getItem('sk_cart') || '[]');
+            cart.push(pid);
+            localStorage.setItem('sk_cart', JSON.stringify(cart));
+            alert('Added to cart (demo). Cart size: ' + cart.length);
+        }
+    </script>
+</body>
+
+</html>

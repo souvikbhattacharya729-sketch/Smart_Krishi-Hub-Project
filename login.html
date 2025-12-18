@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>SmartKrishi Hub — Login</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+
+<body>
+    <main class="login-wrapper" role="main">
+        <form id="loginForm" class="login-card" aria-label="Login or sign up form">
+            <div class="brand-row">
+                <div class="logo">SK</div>
+                <h1 class="brand">SmartKrishi Hub</h1>
+            </div>
+
+            <p class="login-sub">An easy platform for farmers</p>
+
+            <label class="field">
+                <span>Mobile number</span>
+                <input id="mobile" name="mobile" type="tel" placeholder="98765xxxxx" required aria-required="true"
+                    pattern="[0-9]{10}" />
+            </label>
+
+            <label class="field">
+                <span>Village / Town</span>
+                <input id="village" name="village" type="text" placeholder="Village / Town" required />
+            </label>
+
+            <label class="field">
+                <span>Password</span>
+                <input id="password" name="password" type="password" placeholder="Create or enter password" required />
+            </label>
+
+            <button type="submit" class="btn login-btn" aria-label="Login or sign up">Login </button>
+            <br>
+            <br>
+
+            <button type="submit" class="btn login-btn" aria-label="Login or sign up"><a href="signup.html"> Sign Up</a>
+            </button>
+
+
+
+
+            <footer class="login-foot">
+                <small>Terms and Conditions Applied</small>
+            </footer>
+        </form>
+    </main>
+
+    <script>
+        // Demo login: validate simple fields, set session flag and redirect to project.html
+        document.getElementById('loginForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const mobile = document.getElementById('mobile').value.trim();
+            const village = document.getElementById('village').value.trim();
+            const password = document.getElementById('password').value.trim();
+
+            if (!/^\d{10}$/.test(mobile)) {
+                alert('Please enter a valid 10-digit mobile number.');
+                return;
+            }
+            if (!village || !password) {
+                alert('Please fill all fields.');
+                return;
+            }
+
+            // Demo auth: store a flag (NOT secure, only for demo)
+            sessionStorage.setItem('sk_logged_in', 'true');
+            sessionStorage.setItem('sk_user_village', village);
+            window.location.href = 'project.html';
+        });
+    </script>
+</body>
+
+</html>

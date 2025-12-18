@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>SmartKrishi Hub — Learning</title>
+    <link rel="stylesheet" href="project1.css">
+</head>
+
+<body>
+    <header class="topbar" role="banner">
+        <div class="left">
+
+            <div class="brand"><img src="./logo-removebg-preview.png" alt="" height="200px" width="200px"></div>
+        </div>
+
+        <nav class="nav" role="navigation" aria-label="Main">
+            <a href="project.html">Home</a>
+            <a href="project1.html" class="active">Learning</a>
+            <a href="project2.html">Low-Cost Tools</a>
+            <a href="project3.html">AI Chat</a>
+            <a href="project4.html">Marketplace</a>
+            <a href="project5.html">Schemes</a>
+            <a href="project6.html">Language</a>
+        </nav>
+
+        <div class="actions">
+            <button class="btn outline" id="langBtn" aria-haspopup="true" aria-label="Change language">Language</button>
+            <button class="btn outline" id="dashboardBtn">Dashboard</button>
+            <button class="btn filled" id="logoutTop">Logout</button>
+        </div>
+    </header>
+
+    <main class="container" role="main">
+        <h1>Learning Hub</h1>
+        <p class="subtitle">Short, practical videos and notes for farmers. Upload a local video for demo preview or open
+            YouTube links.</p>
+
+        <!-- <section class="upload-box">
+            <h2>Upload video (demo)</h2>
+            <form id="videoForm">
+                <input id="videoInput" type="file" accept="video/*" />
+                <div id="previewArea"></div>
+            </form>
+        </section> -->
+
+        <section class="grid" aria-live="polite" id="videosGrid">
+            <!-- demo video cards will be rendered here -->
+        </section>
+
+        <section class="box">
+            <h2>Upgrade for better learning</h2>
+            <p>Plus: offline downloads. Pro: expert video sessions & certificates. (Demo)</p>
+            <div class="cta-row"><button class="btn primary" id="upgradeLearn">Upgrade to Plus</button></div>
+        </section>
+    </main>
+
+    <footer>
+        SmartKrishi Hub • Connecting Farmers to innovation.
+        <p>SmartKrishi Hub is an online farming platform that educates, supports, and empowers farmers through modern
+            technology, low-cost tools, smart farming guidance, and a direct marketplace — helping them earn better and
+            farm smarter.
+        </p>
+        <p>Proudly supporting the United Nations Sustainable Development Goals — including Food Security, Quality
+            Education, Economic Growth, Innovation, Sustainability, and Climate Action.</p>
+        <p><strong> Contact Details :</strong></p>
+        <p> Email : support@smartkrishihub.com</p>
+        <p>Customer Support: +91 9112334890
+        </p>
+
+        <p>© 2025 SmartKrishi Hub. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // auth guard
+        if (sessionStorage.getItem('sk_logged_in') !== 'true') location.href = 'login.html';
+
+        const demoVideos = [
+            { id: 1, title: 'How to prepare soil', thumb: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="320" height="180"><rect width="100%" height="100%" fill="%23e6f7ea"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="%23085a2b" font-size="18">Soil Prep</text></svg>', yt: 'https://www.youtube.com/' },
+            { id: 2, title: 'Drip irrigation basics', thumb: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="320" height="180"><rect width="100%" height="100%" fill="%23fff7e6"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="%23a45100" font-size="18">Drip Irrigation</text></svg>', yt: 'https://www.youtube.com/' },
+            { id: 3, title: 'Natural pest control', thumb: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="320" height="180"><rect width="100%" height="100%" fill="%23eef8ff"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="%23004a7f" font-size="18">Pest Control</text></svg>', yt: 'https://www.youtube.com/' }
+        ];
+
+        function renderVideos() {
+            const grid = document.getElementById('videosGrid'); grid.innerHTML = '';
+            demoVideos.forEach(v => {
+                const card = document.createElement('article'); card.className = 'card';
+                card.innerHTML = `<img class="thumb" src="${v.thumb}" alt="${v.title} thumbnail"><h3>${v.title}</h3><p>Short practical guide.</p><div class="btn-row"><a class="btn outline" target="_blank" href="${v.yt}">Watch on YouTube</a></div>`;
+                grid.appendChild(card);
+            });
+        }
+        renderVideos();
+
+        // Preview uploaded video file (demo)
+        document.getElementById('videoInput').addEventListener('change', function (e) {
+            const file = e.target.files[0]; const preview = document.getElementById('previewArea'); preview.innerHTML = '';
+            if (!file) return;
+            const url = URL.createObjectURL(file);
+            const v = document.createElement('video'); v.src = url; v.controls = true; v.width = 320; preview.appendChild(v);
+        });
+
+        document.getElementById('backHome').addEventListener('click', () => location.href = 'project.html');
+        document.getElementById('upgradeLearn').addEventListener('click', () => alert('Plus: offline downloads. Pro: expert sessions (demo).'));
+    </script>
+</body>
+
+</html>

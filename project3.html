@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>SmartKrishi Hub — AI Chat</title>
+    <link rel="stylesheet" href="project3.css">
+</head>
+
+<body>
+    <header class="topbar" role="banner">
+        <div class="left">
+            <div class="brand"><img src="./logo-removebg-preview.png" alt="" height="200px" width="200px"></div>
+        </div>
+
+        <nav class="nav" role="navigation" aria-label="Main">
+            <a href="project.html">Home</a>
+            <a href="project1.html">Learning</a>
+            <a href="project2.html">Low-Cost Tools</a>
+            <a href="project3.html" class="active">AI Chat</a>
+            <a href="project4.html">Marketplace</a>
+            <a href="project5.html">Schemes</a>
+            <a href="project6.html">Language</a>
+        </nav>
+
+        <div class="actions">
+            <button class="btn outline" id="langBtn" aria-haspopup="true" aria-label="Change language">Language</button>
+            <button class="btn outline" id="dashboardBtn">Dashboard</button>
+            <button class="btn filled" id="logoutTop">Logout</button>
+        </div>
+    </header>
+
+    <main class="container">
+        <h1>AI Farming Assistant </h1>
+        <p class="subtitle">Ask a question or upload a photo (leaf/soil) and receive a demo diagnosis. Replace simulated
+            sections with real API calls later.</p>
+
+        <section class="chat-card" aria-live="polite">
+            <div id="chatWindow" class="chat-window">
+                <div class="message bot">
+                    <div class="bubble">Namaste! Upload a leaf photo or ask about irrigation, fertilizer or pests.</div>
+                </div>
+            </div>
+
+            <form id="chatForm" class="chat-input-row" aria-label="Chat form">
+                <input type="file" id="imgInput" accept="image/*" aria-label="Upload image" />
+                <input type="text" id="chatInput" placeholder="Type your question here..." aria-label="Message input" />
+                <button type="submit" class="btn primary">Send</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        SmartKrishi Hub • Connecting Farmers to innovation.
+        <p>SmartKrishi Hub is an online farming platform that educates, supports, and empowers farmers through modern
+            technology, low-cost tools, smart farming guidance, and a direct marketplace — helping them earn better and
+            farm smarter.
+        </p>
+        <p>Proudly supporting the United Nations Sustainable Development Goals — including Food Security, Quality
+            Education, Economic Growth, Innovation, Sustainability, and Climate Action.</p>
+        <p><strong> Contact Details :</strong></p>
+        <p> Email : support@smartkrishihub.com</p>
+        <p>Customer Support: +91 9112334890
+        </p>
+
+        <p>© 2025 SmartKrishi Hub. All rights reserved.</p>
+    </footer>
+
+    <script>
+        if (sessionStorage.getItem('sk_logged_in') !== 'true') location.href = 'login.html';
+        const chatWindow = document.getElementById('chatWindow');
+        const chatForm = document.getElementById('chatForm');
+        const chatInput = document.getElementById('chatInput');
+        const imgInput = document.getElementById('imgInput');
+
+        function addMessage(text, who = 'bot') {
+            const div = document.createElement('div'); div.className = 'message ' + who;
+            div.innerHTML = '<div class="bubble">' + text + '</div>';
+            chatWindow.appendChild(div); chatWindow.scrollTop = chatWindow.scrollHeight;
+        }
+
+        // Example image analysis simulation
+        function analyzeImage(file) {
+            addMessage('Analyzing image...', 'bot');
+            // Simulate API delay
+            setTimeout(() => {
+                // Demo deterministic "analysis" by file name length
+                const nameLen = file.name.length;
+                const result = (nameLen % 3 === 0) ?
+                    'Issue detected: Early blight . Suggested remedy: Remove infected leaves, apply recommended fungicide and maintain crop rotation.' :
+                    'Issue detected: Possible nutrient deficiency . Suggested remedy: Conduct soil test and apply balanced NPK as per results.';
+                addMessage(result, 'bot');
+            }, 1200);
+        }
+
+        // Chat form: handle text or image
+        chatForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const text = chatInput.value.trim();
+            const file = imgInput.files[0];
+            if (!text && !file) return alert('Type a question or upload an image.');
+            if (text) {
+                addMessage(text, 'user');
+                // simple canned replies
+                const t = text.toLowerCase();
+                if (t.includes('water') || t.includes('irrig')) addMessage('Use drip irrigation and mulch to save water .', 'bot');
+                else if (t.includes('fert') || t.includes('urea')) addMessage('Follow soil test recommendations; split nitrogen doses .', 'bot');
+                else addMessage('Thanks — in a full version, AI would give region-specific advice .', 'bot');
+                chatInput.value = '';
+            }
+            if (file) {
+                addMessage('📷 Image uploaded. Showing preview below:', 'user');
+                // show thumbnail
+                const reader = new FileReader();
+                reader.onload = function (ev) {
+                    addMessage('<img src="' + ev.target.result + '" alt="upload" style="max-width:220px;border-radius:8px">', 'user');
+                }
+                reader.readAsDataURL(file);
+                analyzeImage(file);
+
+                // TODO: In production call your image-recognition API here.
+
+                fetch('https://api.plantix.net', {
+                    method: 'POST',
+                    headers: { 'Authorization': 'Bearer YOUR_KEY' },
+                    body: formDataWithImage
+                })
+                    .then(r => r.json())
+                    .then(showResults);
+
+                imgInput.value = '';
+            }
+        });
+    </script>
+</body>
+
+</html>

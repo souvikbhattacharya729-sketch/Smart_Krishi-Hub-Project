@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>SmartKrishi Hub — Language & Dashboard</title>
+    <link rel="stylesheet" href="project6.css">
+</head>
+
+<body>
+    <header class="topbar" role="banner">
+        <div class="left">
+            <div class="brand"><img src="./logo-removebg-preview.png" alt="" height="200px" width="200px"></div>
+        </div>
+
+        <nav class="nav" role="navigation" aria-label="Main">
+            <a href="project.html">Home</a>
+            <a href="project1.html">Learning</a>
+            <a href="project2.html">Low-Cost Tools</a>
+            <a href="project3.html">AI Chat</a>
+            <a href="project4.html">Marketplace</a>
+            <a href="project5.html">Schemes</a>
+            <a href="project6.html" class="active">Language</a>
+        </nav>
+
+        <div class="actions">
+            <button class="btn outline" id="langBtn" aria-haspopup="true" aria-label="Change language">Language</button>
+            <button class="btn outline" id="dashboardBtn">Dashboard</button>
+            <button class="btn filled" id="logoutTop">Logout</button>
+        </div>
+    </header>
+
+    <main class="container">
+        <h1>Language & Dashboard</h1>
+        <p class="subtitle">Choose your language and view a quick dashboard.</p>
+
+        <section class="box">
+            <h2>Select Language</h2>
+            <div class="lang-grid" id="langGrid"></div>
+        </section>
+
+        <section class="box">
+            <h2>Dashboard</h2>
+            <div class="widgets">
+                <div class="widget">
+                    <h3>Wallet</h3>
+                    <p>₹ <span id="wallet">2,300</span></p>
+                </div>
+                <div class="widget">
+                    <h3>Messages</h3>
+                    <p id="msgs">2 new messages</p>
+                </div>
+                <div class="widget">
+                    <h3>Last sold</h3>
+                    <p>Tomato — 800kg @ ₹22/kg</p>
+                </div>
+            </div>
+            <div style="margin-top:0.8rem;"><button class="btn primary" id="logoutBtn">Logout</button></div>
+        </section>
+    </main>
+
+    <footer>
+        SmartKrishi Hub • Connecting Farmers to innovation.
+        <p>SmartKrishi Hub is an online farming platform that educates, supports, and empowers farmers through modern
+            technology, low-cost tools, smart farming guidance, and a direct marketplace — helping them earn better and
+            farm smarter.
+        </p>
+        <p>Proudly supporting the United Nations Sustainable Development Goals — including Food Security, Quality
+            Education, Economic Growth, Innovation, Sustainability, and Climate Action.</p>
+        <p><strong> Contact Details :</strong></p>
+        <p> Email : support@smartkrishihub.com</p>
+        <p>Customer Support: +91 9112334890
+        </p>
+
+        <p>© 2025 SmartKrishi Hub. All rights reserved.</p>
+    </footer>
+
+    <script>
+        if (sessionStorage.getItem('sk_logged_in') !== 'true') location.href = 'login.html';
+        const languages = ['English', 'हिन्दी', 'বাংলা', 'తెలుగు', 'मराठी', 'தமிழ்', 'ગુજરાતી', 'ಕನ್ನಡ', 'മലയാളം', 'ଓଡ଼ିଆ', 'ਪੰਜਾਬੀ', 'অসমীয়া', 'اردو'];
+        const grid = document.getElementById('langGrid');
+        languages.forEach(lang => {
+            const btn = document.createElement('button'); btn.className = 'lang-btn'; btn.textContent = lang;
+            btn.addEventListener('click', () => { alert('Language switched to: ' + lang + ' (demo)'); });
+            grid.appendChild(btn);
+        });
+
+        document.getElementById('logoutBtn').addEventListener('click', function () {
+            sessionStorage.removeItem('sk_logged_in');
+            window.location.href = 'login.html';
+        });
+    </script>
+</body>
+
+</html>
